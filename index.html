@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de PIX - DallaPro Racing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">  <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl p-6">
+    <h1 class="text-2xl font-bold mb-4">Controle de Pagamentos PIX - DallaPro Racing</h1>
+    <p class="mb-4 text-gray-600">Valor integral: <strong>R$ 64,00</strong> | Meia cota: <strong>R$ 32,00</strong></p><div class="overflow-x-auto">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="p-2 text-left">Nome</th>
+        <th class="p-2 text-center">Valor</th>
+        <th class="p-2 text-center">Pago?</th>
+      </tr>
+    </thead>
+    <tbody id="tabela"></tbody>
+  </table>
+</div>
+
+<div class="mt-6">
+  <p class="text-lg">Total Recebido: <strong id="totalRecebido">R$ 0,00</strong></p>
+  <p class="text-lg">Falta Receber: <strong id="faltaReceber">R$ 1.952,00</strong></p>
+</div>
+
+  </div><script>
+const totalEvento = 1952;
+
+const pessoas = [
+  {nome: "Matheus Zignani", valor: 64},
+  {nome: "Marcos Gonzatto", valor: 64},
+  {nome: "Alisson Zignani", valor: 64},
+  {nome: "Pietro Mocelim", valor: 64},
+  {nome: "Lunkes", valor: 64},
+  {nome: "Victor", valor: 64},
+  {nome: "Marcos", valor: 64},
+  {nome: "Felipe", valor: 64},
+  {nome: "Kiko", valor: 64},
+  {nome: "Michel Dil", valor: 64},
+  {nome: "Dan", valor: 64},
+  {nome: "Alexandre Munaro", valor: 64},
+  {nome: "Dudu Munaro", valor: 64},
+  {nome: "Gabriel Munaro", valor: 64},
+  {nome: "Anderson Basso", valor: 64},
+  {nome: "Renan Vicentini", valor: 64},
+  {nome: "João Dalponte", valor: 64},
+  {nome: "Jonathan", valor: 64},
+  {nome: "+4 do Jonathan", valor: 256},
+  {nome: "Erik", valor: 64},
+  {nome: "Gaspar", valor: 64},
+  {nome: "Bernardo Forna", valor: 64},
+
+  {nome: "Namorada do Lunkes", valor: 32},
+  {nome: "Namorada do Victor", valor: 32},
+  {nome: "Namorada do Marcos", valor: 32},
+  {nome: "Namorada do Felipe", valor: 32},
+  {nome: "Filha do Kiko", valor: 32},
+  {nome: "Churrasqueiro", valor: 32},
+  {nome: "Pai do Erik", valor: 32},
+  {nome: "João (amigo do Renan)", valor: 32},
+  {nome: "Rigo", valor: 32},
+];
+
+const tabela = document.getElementById("tabela");
+const totalRecebidoEl = document.getElementById("totalRecebido");
+const faltaReceberEl = document.getElementById("faltaReceber");
+
+function atualizarTotais() {
+  let totalRecebido = 0;
+  document.querySelectorAll(".checkPagamento").forEach((checkbox, index) => {
+    if (checkbox.checked) {
+      totalRecebido += pessoas[index].valor;
+    }
+  });
+
+  totalRecebidoEl.textContent = "R$ " + totalRecebido.toFixed(2);
+  faltaReceberEl.textContent = "R$ " + (totalEvento - totalRecebido).toFixed(2);
+}
+
+pessoas.forEach((pessoa, index) => {
+  const tr = document.createElement("tr");
+  tr.classList.add("border-b");
+
+  tr.innerHTML = `
+    <td class="p-2">${pessoa.nome}</td>
+    <td class="p-2 text-center">R$ ${pessoa.valor.toFixed(2)}</td>
+    <td class="p-2 text-center">
+      <input type="checkbox" class="checkPagamento" onchange="atualizarTotais()">
+    </td>
+  `;
+
+  tabela.appendChild(tr);
+});
+</script></body>
+</html>
